@@ -1,7 +1,9 @@
-import database.connection as conn
+import pandas as pd
 
-def startup():
-    conn.connect()
+from database.connection import load
+
+def main():
+    load()
 
 if __name__ == "__main__":
-    startup()
+    main()
