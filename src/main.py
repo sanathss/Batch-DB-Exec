@@ -1,9 +1,9 @@
 import pandas as pd
 
-from database.connection import connect 
+from commands import startExecution
 
 def main():
-    connect()
+    startExecution()
 
 if __name__ == "__main__":
     main()

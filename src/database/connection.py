@@ -1,8 +1,6 @@
 import json
 
-conn = None
-
-def connect():
+def readDBConfigDetails():
     try:
         with open('dbconfig.json') as config_file:
             return json.load(config_file)
