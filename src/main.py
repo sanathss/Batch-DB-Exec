@@ -1,5 +1,3 @@
-import pandas as pd
-
 from commands import startExecution
 
 def main():
