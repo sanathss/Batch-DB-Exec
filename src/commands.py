@@ -1,4 +1,6 @@
-from database.connection import connect, readDBConfigDetails
+import json
+
+from database.connection import testConnect, executeFiles, readDBConfigDetails
 from directory import getCustomDirectory, readDefaultPaths, retrieveFiles
 
 
@@ -19,35 +21,37 @@ def pathSelection(pathSelection):
             elif int(value) in [1, 2, 3]:
                 return pathSelection[int(value)-1]
             else:
-                print('Enter valid value.')
+                print("\tEnter valid value.")
         except:
-            print('Enter valid value.')
+            print("\tEnter valid value.")
 
 def startExecution():
     #Confirm Database Connection Details
     print('Database Connection details:')
     dbconfig = readDBConfigDetails()
-    print(dbconfig)
+    print("\t" + json.dumps(dbconfig))
     if confirmationMessage() == False:
         return 
-    print('Connection to Database...')
-    if connect(dbconfig) == False:
+    print('Connecting to Database...')
+    if testConnect(dbconfig) == False:
         return
-    print('DB connection to {} server is successful.'.format(dbconfig['server']))
+    print("\tDB connection to {} server is successful.".format(dbconfig['server']))
     #Find Path and list .sql files in order
     print('Select folder with .sql files:')
     defaultPaths = readDefaultPaths()
     index = 0
     for path in defaultPaths:
-        print('{}    {}'.format((index+1), path))
+        print("\t{}    {}".format((index+1), path))
         index = index + 1
-    print('S    Select custom folder directory.')
+    print("\tS    Select custom folder directory.")
     sqlPath = pathSelection(defaultPaths)
-    print('Searching {} ...'.format(sqlPath))
+    print("Searching {} ...".format(sqlPath))
     files = retrieveFiles(sqlPath)
-    print('Found {} SQL file(s).'.format(len(files)))
+    print("\tFound {} SQL file(s).".format(len(files)))
     for file in files:
-        print('    ' + file)
+        print("\t" + file)
     if confirmationMessage() == False:
         return 
     print('Executing...')
+    executeFiles(dbconfig, sqlPath, files)
+    print('Tasks Complete.')
