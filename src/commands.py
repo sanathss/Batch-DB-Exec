@@ -1,10 +1,5 @@
 from database.connection import readDBConfigDetails, connect
 
-from tkinter.filedialog import askdirectory
-
-def getFileDirectory():
-    return askdirectory()
-
 def confirmationMessage():
     while(True):
         value = input("Confirm (Y/N): ") 
