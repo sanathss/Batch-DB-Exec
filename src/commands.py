@@ -1,4 +1,4 @@
-from database.connection import readDBConfigDetails
+from database.connection import readDBConfigDetails, connect
 
 from tkinter.filedialog import askdirectory
 
@@ -16,6 +16,11 @@ def confirmationMessage():
 def startExecution():
     #Confirm Database Connection Details
     print('Database Connection details:')
-    print(readDBConfigDetails())
+    dbconfig = readDBConfigDetails()
+    print(dbconfig)
     if confirmationMessage() == False:
         return 
+    print('Connection to Database...')
+    if connect(dbconfig) == False:
+        return
+    print('DB connection to {} server is successful.'.format(dbconfig['server']))
